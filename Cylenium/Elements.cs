@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using OpenQA.Selenium;
@@ -12,14 +13,6 @@ namespace Cylenium
 
         public int Count => ((ICollection<Element>)Items).Count;
 
-        public bool IsReadOnly => ((ICollection<Element>)Items).IsReadOnly;
-
-        public Element this[int index]
-        {
-            get => ((IList<Element>)Items)[index];
-            set => ((IList<Element>)Items)[index] = value;
-        }
-
         public Elements(By by, IList<IWebElement> elements)
         {
             _list = elements;
@@ -28,6 +21,31 @@ namespace Cylenium
             {
                 Items.Add(new Element(by, e));
             }
+        }
+
+        public Element First()
+        {
+            return Items.First();
+        }
+
+        public Element Last()
+        {
+            return Items.Last();
+        }
+
+        public bool IsEmpty()
+        {
+            return Count == 0;
+        }
+
+# region IList members
+
+        public bool IsReadOnly => ((ICollection<Element>)Items).IsReadOnly;
+
+        public Element this[int index]
+        {
+            get => ((IList<Element>)Items)[index];
+            set => ((IList<Element>)Items)[index] = value;
         }
 
         public int IndexOf(Element item)
@@ -79,5 +97,7 @@ namespace Cylenium
         {
             return ((IEnumerable)Items).GetEnumerator();
         }
+
+# endregion
     }
 }
