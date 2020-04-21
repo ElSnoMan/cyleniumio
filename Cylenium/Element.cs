@@ -74,12 +74,68 @@ namespace Cylenium
         }
 
         /// <summary>
+        /// Get the siblings of this element.
+        /// </summary>
+        public Elements Siblings()
+        {
+            var js = @"
+                elem = arguments[0];
+                var siblings = [];
+                var sibling = elem.parentNode.firstChild;
+
+                while (sibling) {
+                    if (sibling.nodeType === 1 && sibling !== elem) {
+                        siblings.push(sibling);
+                    }
+                    sibling = sibling.nextSibling
+                }
+                return siblings;";
+            var elements = cy.ExecuteScript<ReadOnlyCollection<IWebElement>>(js, WebElement);
+            return new Elements(null, elements);
+        }
+
+        /// <summary>
         /// Hover the element.
         /// </summary>
         public Element Hover()
         {
             Actions actions = new Actions(cy.WebDriver);
             actions.MoveToElement(WebElement).Perform();
+            return this;
+        }
+
+        /// <summary>
+        /// Submit the input or form element.
+        /// </summary>
+        public Element Submit()
+        {
+            WebElement.Submit();
+            return this;
+        }
+
+        /// <summary>
+        /// Get the element tag name.
+        /// </summary>
+        public string TagName()
+        {
+            return WebElement.TagName;
+        }
+
+        /// <summary>
+        /// Get the element text.
+        /// </summary>
+        public string Text()
+        {
+            return WebElement.Text;
+        }
+
+        /// <summary>
+        /// Simulates typing text into the element.
+        /// </summary>
+        /// <param name="text">The text to type.</param>
+        public Element Type(string text)
+        {
+            WebElement.SendKeys(text);
             return this;
         }
 
