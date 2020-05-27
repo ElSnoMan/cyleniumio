@@ -8,7 +8,7 @@ namespace Cylenium.Tests
     {
         [Test]
         [Category("element")]
-        public void ClickElement()
+        public void Click_element()
         {
             cy.Visit("https://qap.dev");
             cy.Get("[href='/about']").Click();
@@ -17,7 +17,7 @@ namespace Cylenium.Tests
 
         [Test]
         [Category("element")]
-        public void HoverElement()
+        public void Hover_element_to_reveal_menu()
         {
             cy.Visit("https://qap.dev");
             cy.Get("[href='/about']").Hover();
@@ -27,7 +27,7 @@ namespace Cylenium.Tests
 
         [Test]
         [Category("element")]
-        public void ParentAndChildren()
+        public void Get_element_parent_and_children()
         {
             cy.Visit("https://qap.dev");
             var elements = cy.Get("[href='/our-vision'][data-test]").Parent().Children();
@@ -36,7 +36,7 @@ namespace Cylenium.Tests
 
         [Test]
         [Category("element")]
-        public void Siblings()
+        public void Get_element_siblings()
         {
             cy.Visit("https://qap.dev");
             var elements = cy.Get("[href='/our-vision'][data-test]").Siblings();
@@ -45,7 +45,7 @@ namespace Cylenium.Tests
 
         [Test]
         [Category("element")]
-        public void TypeIntoElement()
+        public void Type_into_field()
         {
             cy.Visit("https://google.com");
             cy.Get("[name='q']").Type("puppies" + Keys.Enter);
@@ -54,7 +54,7 @@ namespace Cylenium.Tests
 
         [Test]
         [Category("element")]
-        public void SubmitElement()
+        public void Submit_form()
         {
             cy.Visit("http://the-internet.herokuapp.com/login");
             cy.Get("#username").Type("tomsmith");
