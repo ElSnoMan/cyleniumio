@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace Cylenium
 {
-    public class CyTests
+    public class CySuite
     {
         [SetUp]
         public virtual void BeforeEach()

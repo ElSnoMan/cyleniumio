@@ -4,7 +4,7 @@ using OpenQA.Selenium;
 namespace Cylenium.Tests
 {
     [Parallelizable(ParallelScope.Children)]
-    public class ElementTests : CyTests
+    public class ElementTests : CySuite
     {
         [Test]
         [Category("element")]
@@ -56,10 +56,11 @@ namespace Cylenium.Tests
         [Category("element")]
         public void SubmitElement()
         {
-            cy.Visit("https://google.com");
-            cy.Get("[name='q']").Type("puppies");
-            cy.Get("[name='btnK']").Submit();
-            Assert.IsTrue(cy.Title().Contains("puppies"));
+            cy.Visit("http://the-internet.herokuapp.com/login");
+            cy.Get("#username").Type("tomsmith");
+            cy.Get("#password").Type("SuperSecretPassword!");
+            cy.Get("button[type='submit']").Submit();
+            cy.Get(".flash.success").IsDisplayed();
         }
     }
 }

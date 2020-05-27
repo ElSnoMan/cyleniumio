@@ -3,6 +3,8 @@ using System.Collections.ObjectModel;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
+using WebDriverManager;
+using WebDriverManager.DriverConfigs.Impl;
 
 namespace Cylenium
 {
@@ -16,12 +18,13 @@ namespace Cylenium
 
         public static void Start()
         {
+            new DriverManager().SetUpDriver(new ChromeConfig());
             _driver = new ChromeDriver();
             _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
         }
 
         /// <summary>
-        /// The instance of IWebDriver that Cylenim is wrapped around.
+        /// The instance of IWebDriver that Cylenium is wrapped around.
         /// </summary>
         public static IWebDriver WebDriver => _driver;
 
