@@ -62,5 +62,43 @@ namespace Cylenium.Tests
             cy.Get("button[type='submit']").Submit();
             cy.Get(".flash.success").IsDisplayed();
         }
+
+        [Test]
+        [Category("element")]
+        public void Select_valid_text_option_from_dropdown()
+        {
+            cy.Visit("http://the-internet.herokuapp.com/dropdown");
+            cy.Get("#dropdown").Select("Option 2");
+            Assert.AreEqual(cy.Contains("Option 2").Attribute("selected"), "true");
+        }
+
+        [Test]
+        [Category("element")]
+        public void Select_invalid_text_option_but_valid_value_option_from_dropdown()
+        {
+            cy.Visit("http://the-internet.herokuapp.com/dropdown");
+            cy.Get("#dropdown").Select("2");
+            Assert.AreEqual(cy.Contains("Option 2").Attribute("selected"), "true");
+        }
+
+        [Test]
+        [Category("element")]
+        public void Select_option_from_dropdown_by_index()
+        {
+            cy.Visit("http://the-internet.herokuapp.com/dropdown");
+            Assert.IsFalse(cy.Contains("Option 2").IsSelected());
+
+            cy.Get("#dropdown").Select(2);
+            Assert.IsTrue(cy.Contains("Option 2").IsSelected());
+        }
+
+        [Test]
+        [Category("element")]
+        public void Right_click_element_to_reveal_context_menu()
+        {
+            cy.Visit("http://the-internet.herokuapp.com/context_menu");
+            cy.Get("#hot-spot").RightClick();
+            cy.Wait().Until(drvr => drvr.SwitchTo().Alert()).Accept();
+        }
     }
 }
