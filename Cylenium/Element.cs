@@ -1,6 +1,8 @@
+using System;
 using System.Collections.ObjectModel;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.UI;
 
 namespace Cylenium
 {
@@ -26,12 +28,44 @@ namespace Cylenium
         /// </summary>
         public IWebElement WebElement => _webelement;
 
+        #region CHARACTERISTICS
+
+        /// <summary>
+        /// Get the value of the given attribute.
+        /// </summary>
+        /// <param name="attrName">The attribute name.</param>
+        /// <returns>The attribute value.</returns>
+        public string Attribute(string attrName)
+        {
+            return WebElement.GetAttribute(attrName);
+        }
+
+        /// <summary>
+        /// Get the element tag name.
+        /// </summary>
+        public string TagName()
+        {
+            return WebElement.TagName;
+        }
+
+        /// <summary>
+        /// Get the element text.
+        /// </summary>
+        public string Text()
+        {
+            return WebElement.Text;
+        }
+
+        #endregion
+
+        #region ACTIONS
+
         /// <summary>
         /// Clicks the element.
         /// </summary>
         /// <param name="force">Force the click.</param>
         /// <returns>The current element.</returns>
-        public Element Click(bool force=false)
+        public Element Click(bool force = false)
         {
             if (force)
             {
@@ -46,14 +80,94 @@ namespace Cylenium
         }
 
         /// <summary>
-        /// Get the value of the given attribute.
+        /// Double click the element.
         /// </summary>
-        /// <param name="attrName">The attribute name.</param>
-        /// <returns>The attribute value.</returns>
-        public string GetAttr(string attrName)
+        /// <returns>The current element.</returns>
+        public Element DoubleClick()
         {
-            return WebElement.GetAttribute(attrName);
+            new Actions(cy.WebDriver).MoveToElement(WebElement).DoubleClick().Build().Perform();
+            return this;
         }
+
+        /// <summary>
+        /// Hover the element.
+        /// </summary>
+        public Element Hover()
+        {
+            Actions actions = new Actions(cy.WebDriver);
+            actions.MoveToElement(WebElement).Build().Perform();
+            return this;
+        }
+
+        /// <summary>
+        /// Right click (aka Context click) the element.
+        /// </summary>
+        /// <returns>The current element.</returns>
+        public Element RightClick()
+        {
+            new Actions(cy.WebDriver).MoveToElement(WebElement).ContextClick().Build().Perform();
+            return this;
+        }
+
+        /// <summary>
+        /// Selects an &lt;option&gt; element within a &lt;select&gt; dropdown given the text or value.
+        /// </summary>
+        /// <param name="value">The visible text or value of the option.</param>
+        /// <returns>The current dropdown element.</returns>
+        public Element Select(string textOrValue)
+        {
+            if (WebElement.TagName != "select")
+                throw new UnexpectedTagNameException($"Element.Select() expects a <select> element but instead got: {WebElement.TagName}");
+
+            var dropdown = new SelectElement(WebElement);
+            try
+            {
+                dropdown.SelectByText(textOrValue);
+            }
+            catch (NoSuchElementException)
+            {
+                dropdown.SelectByValue(textOrValue);
+            }
+            return this;
+        }
+
+
+        /// <summary>
+        /// Selects an &lt;option&gt; element within a &lt;select&gt; dropdown given the index.
+        /// </summary>
+        /// <param name="index">The zero index position of the option.</param>
+        /// <returns>The current dropdown element.</returns>
+        public Element Select(int index)
+        {
+            if (WebElement.TagName != "select")
+                throw new UnexpectedTagNameException($"Element.Select() expects a <select> element but instead got: {WebElement.TagName}");
+
+            new SelectElement(WebElement).SelectByIndex(index);
+            return this;
+        }
+
+        /// <summary>
+        /// Submit the input or form element.
+        /// </summary>
+        public Element Submit()
+        {
+            WebElement.Submit();
+            return this;
+        }
+
+        /// <summary>
+        /// Simulates typing text into the element.
+        /// </summary>
+        /// <param name="text">The text to type.</param>
+        public Element Type(string text)
+        {
+            WebElement.SendKeys(text);
+            return this;
+        }
+
+        #endregion
+
+        #region FINDING ELEMENTS
 
         /// <summary>
         /// Get the children of this element.
@@ -94,55 +208,28 @@ namespace Cylenium
             return new Elements(null, elements);
         }
 
-        /// <summary>
-        /// Hover the element.
-        /// </summary>
-        public Element Hover()
-        {
-            Actions actions = new Actions(cy.WebDriver);
-            actions.MoveToElement(WebElement).Perform();
-            return this;
-        }
+        #endregion
 
-        /// <summary>
-        /// Submit the input or form element.
-        /// </summary>
-        public Element Submit()
-        {
-            WebElement.Submit();
-            return this;
-        }
-
-        /// <summary>
-        /// Get the element tag name.
-        /// </summary>
-        public string TagName()
-        {
-            return WebElement.TagName;
-        }
-
-        /// <summary>
-        /// Get the element text.
-        /// </summary>
-        public string Text()
-        {
-            return WebElement.Text;
-        }
-
-        /// <summary>
-        /// Simulates typing text into the element.
-        /// </summary>
-        /// <param name="text">The text to type.</param>
-        public Element Type(string text)
-        {
-            WebElement.SendKeys(text);
-            return this;
-        }
+        #region CHECKS or EXPECTATIONS
 
         /// <summary>
         /// Check if the element is displayed.
         /// This means the element is in the DOM and has a size greater than zero.
         /// </summary>
         public bool IsDisplayed() => WebElement.Displayed;
+
+        /// <summary>
+        /// Check if the element is enabled.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsEnabled() => WebElement.Enabled;
+
+        /// <summary>
+        /// Check if the element is selected.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsSelected() => WebElement.Selected;
+
+        #endregion
     }
 }

@@ -38,7 +38,7 @@ namespace Cylenium
             return Count == 0;
         }
 
-# region IList members
+        #region IList interface
 
         public bool IsReadOnly => ((ICollection<Element>)Items).IsReadOnly;
 
@@ -98,6 +98,6 @@ namespace Cylenium
             return ((IEnumerable)Items).GetEnumerator();
         }
 
-# endregion
+        #endregion
     }
 }
