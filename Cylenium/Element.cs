@@ -193,12 +193,14 @@ namespace Cylenium
 
         /// <summary>
         /// Deselects an &lt;option&gt; element within a &lt;select&gt; dropdown given the text or value.
+        ///
+        /// Only works with multi-option dropdowns.
         /// </summary>
         /// <param name="value">The visible text or value of the option.</param>
         /// <returns>The current dropdown element.</returns>
         public Element Deselect(string textOrValue)
         {
-            if (WebElement.GetAttribute("selected") = "selected")
+            if (WebElement.TagName != "select")
                 throw new UnexpectedTagNameException($"Element.Select() expects a <select> element but instead got: {WebElement.TagName}");
 
             var dropdown = new SelectElement(WebElement);
@@ -216,12 +218,14 @@ namespace Cylenium
 
         /// <summary>
         /// Deselects an &lt;option&gt; element within a &lt;select&gt; dropdown given the index.
+        ///
+        /// Only works with multi-option dropdowns.
         /// </summary>
         /// <param name="index">The zero index position of the option.</param>
         /// <returns>The current dropdown element.</returns>
         public Element Deselect(int index)
         {
-            if (WebElement.GetAttribute("") = "selected")
+            if (WebElement.GetAttribute("") == "selected")
                 throw new UnexpectedTagNameException($"Element.Select() expects a <select> element but instead got: {WebElement.TagName}");
 
             new SelectElement(WebElement).DeselectByIndex(index);
