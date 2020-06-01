@@ -41,6 +41,20 @@ namespace Cylenium
         }
 
         /// <summary>
+        /// Get the value of the javascript property.
+        ///
+        /// If the value is null or "null", returns null.
+        /// If the value is a boolean, returns "True" or "False".
+        /// If the value is numeric, returns the string form. For example, 2048 would be "2048".
+        /// </summary>
+        /// <param name="propertyName">The name of the property.</param>
+        /// <returns>The value as a string.</returns>
+        public string Property(string propertyName)
+        {
+            return WebElement.GetProperty(propertyName);
+        }
+
+        /// <summary>
         /// Get the element tag name.
         /// </summary>
         public string TagName()
@@ -59,6 +73,27 @@ namespace Cylenium
         #endregion
 
         #region ACTIONS
+
+        /// <summary>
+        /// Check the checkbox or radio element.
+        /// </summary>
+        /// <returns>The current element.</returns>
+        public Element Check()
+        {
+            var type = WebElement.GetAttribute("type");
+            if (type != "checkbox" && type != "radio")
+                throw new UnexpectedTagNameException($"Element.Check() expects a 'checkbox' or 'radio' element, but got {type}");
+
+            if (this.IsChecked())
+            {
+                // do nothing - already checked
+            }
+            else
+            {
+                WebElement.Click();
+            }
+            return this;
+        }
 
         /// <summary>
         /// Clicks the element.
@@ -106,6 +141,16 @@ namespace Cylenium
         public Element RightClick()
         {
             new Actions(cy.WebDriver).MoveToElement(WebElement).ContextClick().Build().Perform();
+            return this;
+        }
+
+        /// <summary>
+        /// Scroll the element into the Viewport.
+        /// </summary>
+        /// <returns>The current element.</returns>
+        public Element ScrollIntoView()
+        {
+            cy.ExecuteScript<bool>("arguments[0].scrollIntoView(true); return true;", WebElement);
             return this;
         }
 
@@ -248,6 +293,11 @@ namespace Cylenium
         #endregion
 
         #region CHECKS or EXPECTATIONS
+
+        /// <summary>
+        /// Check if the element is checked.
+        /// </summary>
+        public bool IsChecked() => cy.ExecuteScript<bool>("return arguments[0].checked;", WebElement);
 
         /// <summary>
         /// Check if the element is displayed.
