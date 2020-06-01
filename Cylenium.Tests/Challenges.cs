@@ -17,7 +17,6 @@ namespace Cylenium.Tests
             4. Check that there are 20 Makes and Models
             */
             cy.Visit("https://copart.com");
-
             var makesModels = cy.Find("[ng-repeat*='popularSearch'] > a");
 
             foreach (var car in makesModels)
@@ -27,7 +26,7 @@ namespace Cylenium.Tests
                 System.Console.WriteLine($"{name} - {url}");
             }
 
-            Assert.AreEqual(20, makesModels.Count);
+            Assert.That(makesModels.Count, Is.EqualTo(20));
         }
 
         [Test]
