@@ -147,6 +147,43 @@ namespace Cylenium
         }
 
         /// <summary>
+        /// Deselects an &lt;option&gt; element within a &lt;select&gt; dropdown given the text or value.
+        /// </summary>
+        /// <param name="value">The visible text or value of the option.</param>
+        /// <returns>The current dropdown element.</returns>
+        public Element Deselect(string textOrValue)
+        {
+            if (WebElement.GetAttribute("selected") = "selected")
+                throw new UnexpectedTagNameException($"Element.Select() expects a <select> element but instead got: {WebElement.TagName}");
+
+            var dropdown = new SelectElement(WebElement);
+            try
+            {
+                dropdown.DeselectByText(textOrValue);
+            }
+            catch (NoSuchElementException)
+            {
+                dropdown.DeselectByValue(textOrValue);
+            }
+            return this;
+        }
+
+
+        /// <summary>
+        /// Deselects an &lt;option&gt; element within a &lt;select&gt; dropdown given the index.
+        /// </summary>
+        /// <param name="index">The zero index position of the option.</param>
+        /// <returns>The current dropdown element.</returns>
+        public Element Deselect(int index)
+        {
+            if (WebElement.GetAttribute("") = "selected")
+                throw new UnexpectedTagNameException($"Element.Select() expects a <select> element but instead got: {WebElement.TagName}");
+
+            new SelectElement(WebElement).DeselectByIndex(index);
+            return this;
+        }
+
+        /// <summary>
         /// Submit the input or form element.
         /// </summary>
         public Element Submit()
