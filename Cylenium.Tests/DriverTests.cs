@@ -15,7 +15,7 @@ namespace Cylenium.Tests
             cy.Visit("https://google.com");
             wait.Until(_ => cy.Get("[name='q']"));
 
-            Assert.AreEqual(5, wait.Timeout.Seconds);
+            Assert.That(wait.Timeout.Seconds, Is.EqualTo(5));
         }
 
         [Test]
@@ -27,7 +27,7 @@ namespace Cylenium.Tests
             cy.Visit("https://google.com");
             wait.Until(_ => cy.Get("[name='q']"));
 
-            Assert.AreEqual(10, wait.Timeout.Seconds);
+            Assert.That(wait.Timeout.Seconds, Is.EqualTo(10));
         }
     }
 }
