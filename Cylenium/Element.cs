@@ -225,7 +225,7 @@ namespace Cylenium
         /// <returns>The current dropdown element.</returns>
         public Element Deselect(int index)
         {
-            if (WebElement.GetAttribute("") == "selected")
+            if (WebElement.TagName != "select")
                 throw new UnexpectedTagNameException($"Element.Select() expects a <select> element but instead got: {WebElement.TagName}");
 
             new SelectElement(WebElement).DeselectByIndex(index);
