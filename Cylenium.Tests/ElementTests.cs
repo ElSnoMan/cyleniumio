@@ -24,6 +24,7 @@ namespace Cylenium.Tests
             cy.Get("[href='/about']").Hover();
             cy.Contains("Leadership").Click(force: true);
             Assert.That(cy.Contains("Carlos Kidman").IsDisplayed());
+            // Assert.That(cy.Contains("Carlos Kidman").Should().BeDisplayed());
         }
 
         [Test]
@@ -61,7 +62,7 @@ namespace Cylenium.Tests
             cy.Get("#username").Type("tomsmith");
             cy.Get("#password").Type("SuperSecretPassword!");
             cy.Get("button[type='submit']").Submit();
-            cy.Get(".flash.success").IsDisplayed();
+            cy.Get(".flash.success").Should().BeDisplayed();
         }
 
         [Test]
@@ -108,7 +109,7 @@ namespace Cylenium.Tests
         {
             cy.Visit("https://amazon.com");
             var backToTop = cy.Get("#navBackToTop").ScrollIntoView();
-            Assert.That(backToTop.IsDisplayed(), Is.True);
+            Expect.That(backToTop.Should().BeClickable());
         }
 
         [Test]
@@ -121,7 +122,7 @@ namespace Cylenium.Tests
             Assert.That(checkbox.IsChecked(), Is.False);
 
             checkbox.Check();
-            Assert.That(checkbox.IsChecked(), Is.True);
+            Expect.That(checkbox.Should().BeChecked());
         }
 
         [Test]
@@ -130,6 +131,16 @@ namespace Cylenium.Tests
         {
             cy.Visit("http://the-internet.herokuapp.com/checkboxes");
             Assert.That(cy.Get("form").Check, Throws.TypeOf<UnexpectedTagNameException>());
+        }
+
+        [Test]
+        [Category("element"), Category("should")]
+        public void Element_not_displayed_throws_AssertionException()
+        {
+            cy.Visit("https://deckshop.pro");
+            Assert.That(
+                cy.Get("#smartHelp").Should().BeDisplayed,
+                Throws.TypeOf<AssertionException>());
         }
 
         [Test]
@@ -156,6 +167,14 @@ namespace Cylenium.Tests
 
             var files = field.Property("files");
             Assert.That(files, Is.EqualTo(null));
+        }
+
+        [Test]
+        [Category("element")]
+        public void Element_is_enabled()
+        {
+            cy.Visit("http://the-internet.herokuapp.com/checkboxes");
+            cy.Get("[type='checkbox']").Should().BeEnabled();
         }
     }
 }
