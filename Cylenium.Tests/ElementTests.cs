@@ -142,6 +142,19 @@ namespace Cylenium.Tests
 
         [Test]
         [Category("element")]
+        public void Uncheck_a_checkbox()
+        {
+            cy.Visit("http://the-internet.herokuapp.com/checkboxes");
+
+            var checkbox = cy.Get("[type='checkbox']");
+            Assert.That(checkbox.IsChecked(), Is.False);
+
+            checkbox.Uncheck();
+            Assert.That(checkbox.IsChecked(), Is.False);
+        }
+
+        [Test]
+        [Category("element")]
         public void Check_an_invalid_element_throws_exception()
         {
             cy.Visit("http://the-internet.herokuapp.com/checkboxes");

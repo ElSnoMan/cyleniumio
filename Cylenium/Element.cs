@@ -96,6 +96,27 @@ namespace Cylenium
         }
 
         /// <summary>
+        /// Uncheck the checkbox or radio element.
+        /// </summary>
+        /// <returns>The current element.</returns>
+        public Element Uncheck()
+        {
+            var type = WebElement.GetAttribute("type");
+            if (type != "checkbox" && type != "radio")
+                throw new UnexpectedTagNameException($"Element.Check() expects a 'checkbox' or 'radio' element, but got {type}");
+
+            if (this.IsChecked())
+            {
+                WebElement.Click();
+            }
+            else
+            {
+                // do nothing - already unchecked
+            }
+            return this;
+        }
+
+        /// <summary>
         /// Clicks the element.
         /// </summary>
         /// <param name="force">Force the click.</param>
