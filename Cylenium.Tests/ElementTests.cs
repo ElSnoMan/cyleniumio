@@ -95,6 +95,22 @@ namespace Cylenium.Tests
 
         [Test]
         [Category("element")]
+        public void Deselect_option_from_dropdown()
+        {
+            cy.Visit("https://www.seleniumeasy.com/test/basic-select-dropdown-demo.html");
+            var dropdown = cy.Get("#multi-select");
+
+            dropdown.Select("Ohio").Select("Texas");
+            cy.Contains("Get All Selected").Click();
+            Assert.That(cy.Get(".getall-selected").Text(), Does.Contain("Texas"));
+
+            dropdown.Deselect("Texas");
+            cy.Contains("Get All Selected").Click();
+            Assert.That(cy.Get(".getall-selected").Text(), Does.Contain("Ohio"));
+        }
+
+        [Test]
+        [Category("element")]
         public void Right_click_element_to_reveal_context_menu()
         {
             cy.Visit("http://the-internet.herokuapp.com/context_menu");
