@@ -129,7 +129,7 @@ namespace Cylenium.Tests
 
         [Test]
         [Category("element")]
-        public void Check_a_checkbox()
+        public void Check_and_uncheck_a_checkbox()
         {
             cy.Visit("http://the-internet.herokuapp.com/checkboxes");
 
@@ -138,6 +138,9 @@ namespace Cylenium.Tests
 
             checkbox.Check();
             Assert.That(checkbox.IsChecked(), Is.True);
+
+            checkbox.Uncheck();
+            Assert.That(checkbox.IsChecked(), Is.False);
         }
 
         [Test]
