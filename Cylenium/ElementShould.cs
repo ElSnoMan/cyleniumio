@@ -100,5 +100,22 @@ namespace Cylenium
                 throw new AssertionException($"Element was disabled - Locator: ``{_element.By}``");
             }
         }
+
+        /// <summary>
+        /// An expectation that the element is focused.
+        /// </summary>
+        /// <returns>The current element.</returns>
+        public Element BeFocused()
+        {
+            try
+            {
+                _wait.Until(_ => _element.IsEnabled());
+                return _element;
+            }
+            catch (WebDriverTimeoutException)
+            {
+                throw new AssertionException($"Element was disabled - Locator: ``{_element.By}``");
+            }
+        }
     }
 }

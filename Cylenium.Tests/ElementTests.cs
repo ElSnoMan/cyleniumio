@@ -137,11 +137,7 @@ namespace Cylenium.Tests
             var checkbox = cy.Get("[type='checkbox']");
             Assert.That(checkbox.IsChecked(), Is.False);
 
-            checkbox.Check();
-            Assert.That(checkbox.IsChecked(), Is.True);
-
-            checkbox.Uncheck();
-            Assert.That(checkbox.IsChecked(), Is.False);
+            checkbox.Check().Should().BeChecked();
         }
 
         [Test]
