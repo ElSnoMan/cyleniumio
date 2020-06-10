@@ -231,6 +231,14 @@ namespace Cylenium
             WebDriver.Manage().Window.Maximize();
         }
 
+        /// <summary>
+        /// Gets the size of the current window.
+        /// </summary>
+        public static System.Drawing.Size WindowSize()
+        {
+            return WebDriver.Manage().Window.Size;
+        }
+
         #endregion
     }
 }
