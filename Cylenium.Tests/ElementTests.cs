@@ -134,7 +134,8 @@ namespace Cylenium.Tests
             cy.Visit("http://the-internet.herokuapp.com/checkboxes");
 
             var checkbox = cy.Get("[type='checkbox']");
-            Assert.That(checkbox.IsChecked(), Is.False);
+            checkbox.Check();
+            Assert.That(checkbox.IsChecked(), Is.True);
 
             checkbox.Check();
             Assert.That(checkbox.IsChecked(), Is.True);
@@ -147,8 +148,11 @@ namespace Cylenium.Tests
             cy.Visit("http://the-internet.herokuapp.com/checkboxes");
 
             var checkbox = cy.Get("[type='checkbox']");
+            checkbox.Check();
+            checkbox.Uncheck();
             Assert.That(checkbox.IsChecked(), Is.False);
 
+            //checkbox.Check();
             checkbox.Uncheck();
             Assert.That(checkbox.IsChecked(), Is.False);
         }

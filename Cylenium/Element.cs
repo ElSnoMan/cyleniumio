@@ -81,14 +81,14 @@ namespace Cylenium
         public Element Check()
         {
             var type = WebElement.GetAttribute("type");
-            if (type != "checkbox" && type != "radio")
+            if (type != "checkbox" || type != "radio")
                 throw new UnexpectedTagNameException($"Element.Check() expects a 'checkbox' or 'radio' element, but got {type}");
 
-            if (this.IsChecked())
-            {
-                // do nothing - already checked
-            }
-            else
+            if (!this.IsChecked())
+            //{
+            //    // do nothing - already checked
+            //}
+            //else
             {
                 WebElement.Click();
             }
@@ -102,16 +102,12 @@ namespace Cylenium
         public Element Uncheck()
         {
             var type = WebElement.GetAttribute("type");
-            if (type != "checkbox" && type != "radio")
+            if (type != "checkbox" || type != "radio")
                 throw new UnexpectedTagNameException($"Element.Check() expects a 'checkbox' or 'radio' element, but got {type}");
 
             if (this.IsChecked())
             {
                 WebElement.Click();
-            }
-            else
-            {
-                // do nothing - already unchecked
             }
             return this;
         }
