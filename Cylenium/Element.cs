@@ -269,6 +269,109 @@ namespace Cylenium
         #region FINDING ELEMENTS
 
         /// <summary>
+        /// Find the element that contains the given text.
+        /// </summary>
+        /// <param name="text">The text for the element to contain.</param>
+        /// <param timeout=-1>The max number of seconds to wait for the element to be found.</param>
+        /// <returns>The Element when found.</returns>
+        public Element Contains(string text, int timeout = -1)
+        {
+            var by = By.XPath($".//*[contains(text(), '{text}')]");
+
+            if (timeout == 0)
+            {
+                return new Element(by, WebElement.FindElement(by));
+            }
+
+            var element = cy.Wait(timeout).Until(_ => WebElement.FindElement(by));
+            return new Element(by, element);
+        }
+
+        /// <summary>
+        /// Find the elements with the given CSS selector.
+        /// </summary>
+        /// <param name="css">The CSS selector.</param>
+        /// <param name="atLeastOne">Wait until at least one is found?</param>
+        /// <param timeout=-1>The max number of seconds to wait for an element to be found.</param>
+        /// <returns>The list of Elements</returns>
+        public Elements Find(string css, bool atLeastOne = true, int timeout = -1)
+        {
+            ReadOnlyCollection<IWebElement> elements = null;
+            var by = By.CssSelector(css);
+
+            if (atLeastOne)
+            {
+                cy.Wait(timeout).Until(_ => WebElement.FindElements(by).Count > 0);
+                elements = WebElement.FindElements(by);
+            }
+            else
+            {
+                elements = WebElement.FindElements(by);
+            }
+
+            return new Elements(by, elements);
+        }
+
+        /// <summary>
+        /// Find the elements with the given XPath.
+        /// </summary>
+        /// <param name="xpath">The XPath.</param>
+        /// <param name="atLeastOne">Wait until at least one is found?</param>
+        /// <param timeout=-1>The max number of seconds to wait for an element to be found.</param>
+        /// <returns>The list of Elements.</returns>
+        public Elements FindX(string xpath, bool atLeastOne = false, int timeout = -1)
+        {
+            ReadOnlyCollection<IWebElement> elements = null;
+            var by = By.XPath(xpath);
+
+            if (atLeastOne)
+            {
+                cy.Wait(timeout).Until(_ => WebElement.FindElements(by).Count > 0);
+                elements = WebElement.FindElements(by);
+            }
+            else
+            {
+                elements = WebElement.FindElements(by);
+            }
+
+            return new Elements(by, elements);
+        }
+
+        /// <summary>
+        /// Find the element with the given CSS selector.
+        /// </summary>
+        /// <param name="css">The CSS selector.</param>
+        /// <param timeout=-1>The max number of seconds to wait for the element to be found.</param>
+        /// <returns>The Element when found.</returns>
+        public Element Get(string css, int timeout = -1)
+        {
+            var by = By.CssSelector(css);
+            if (timeout == 0)
+            {
+                return new Element(by, WebElement.FindElement(by));
+            }
+            var element = cy.Wait(timeout).Until(_ => WebElement.FindElement(by));
+            return new Element(by, element);
+        }
+
+        /// <summary>
+        /// Find the element with the given Xpath.
+        /// </summary>
+        /// <param name="xpath">The Xpath selector.</param>
+        /// <param timeout=-1>The max number of seconds to wait for the element to be found.</param>
+        /// <returns>The Element when found.</returns>
+        public Element GetX(string xpath, int timeout = -1)
+        {
+            var by = By.XPath(xpath);
+            if (timeout == 0)
+            {
+                return new Element(by, WebElement.FindElement(by));
+            }
+            var element = cy.Wait(timeout).Until(_ => WebElement.FindElement(by));
+            return new Element(by, element);
+        }
+
+        /// <summary>
         /// Get the children of this element.
         /// </summary>
         public Elements Children()

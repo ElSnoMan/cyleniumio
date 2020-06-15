@@ -128,11 +128,18 @@ namespace Cylenium
         /// Find the element that contains the given text.
         /// </summary>
         /// <param name="text">The text for the element to contain.</param>
+        /// <param timeout=-1>The max number of seconds to wait for the element to be found.</param>
         /// <returns>The Element when found.</returns>
-        public static Element Contains(string text)
+        public static Element Contains(string text, int timeout=-1)
         {
             var by = By.XPath($"//*[contains(text(), '{text}')]");
-            var element = _wait.Until(drvr => drvr.FindElement(by));
+
+            if (timeout == 0)
+            {
+                return new Element(by, WebDriver.FindElement(by));
+            }
+
+            var element = Wait(timeout).Until(drvr => drvr.FindElement(by));
             return new Element(by, element);
         }
 
@@ -141,15 +148,16 @@ namespace Cylenium
         /// </summary>
         /// <param name="css">The CSS selector.</param>
         /// <param name="atLeastOne">Wait until at least one is found?</param>
+        /// <param timeout=-1>The max number of seconds to wait for an element to be found.</param>
         /// <returns>The list of Elements</returns>
-        public static Elements Find(string css, bool atLeastOne = true)
+        public static Elements Find(string css, bool atLeastOne = true, int timeout = -1)
         {
             ReadOnlyCollection<IWebElement> elements = null;
             var by = By.CssSelector(css);
 
             if (atLeastOne)
             {
-                _wait.Until(drvr => drvr.FindElements(by).Count > 0);
+                Wait(timeout).Until(drvr => drvr.FindElements(by).Count > 0);
                 elements = WebDriver.FindElements(by);
             }
             else
@@ -165,15 +173,16 @@ namespace Cylenium
         /// </summary>
         /// <param name="xpath">The XPath.</param>
         /// <param name="atLeastOne">Wait until at least one is found?</param>
+        /// <param timeout=-1>The max number of seconds to wait for an element to be found.</param>
         /// <returns>The list of Elements.</returns>
-        public static Elements FindX(string xpath, bool atLeastOne = false)
+        public static Elements FindX(string xpath, bool atLeastOne = false, int timeout = -1)
         {
             ReadOnlyCollection<IWebElement> elements = null;
             var by = By.XPath(xpath);
 
             if (atLeastOne)
             {
-                _wait.Until(drvr => drvr.FindElements(by).Count > 0);
+                Wait(timeout).Until(drvr => drvr.FindElements(by).Count > 0);
                 elements = WebDriver.FindElements(by);
             }
             else
@@ -188,11 +197,16 @@ namespace Cylenium
         /// Find the element with the given CSS selector.
         /// </summary>
         /// <param name="css">The CSS selector.</param>
+        /// <param timeout=-1>The max number of seconds to wait for the element to be found.</param>
         /// <returns>The Element when found.</returns>
-        public static Element Get(string css)
+        public static Element Get(string css, int timeout = -1)
         {
             var by = By.CssSelector(css);
-            var element = _wait.Until(drvr => drvr.FindElement(by));
+            if (timeout == 0)
+            {
+                return new Element(by, WebDriver.FindElement(by));
+            }
+            var element = Wait(timeout).Until(drvr => drvr.FindElement(by));
             return new Element(by, element);
         }
 
@@ -200,11 +214,16 @@ namespace Cylenium
         /// Find the element with the given Xpath.
         /// </summary>
         /// <param name="xpath">The Xpath selector.</param>
+        /// <param timeout=-1>The max number of seconds to wait for the element to be found.</param>
         /// <returns>The Element when found.</returns>
-        public static Element GetX(string xpath)
+        public static Element GetX(string xpath, int timeout = -1)
         {
             var by = By.XPath(xpath);
-            var element = _wait.Until(drvr => drvr.FindElement(by));
+            if (timeout == 0)
+            {
+                return new Element(by, WebDriver.FindElement(by));
+            }
+            var element = Wait(timeout).Until(drvr => drvr.FindElement(by));
             return new Element(by, element);
         }
 
