@@ -34,13 +34,10 @@ namespace Cylenium.Tests
 
         [Test]
         [Category("Driver")]
-        public void Return_window_size()
+        public void Set_and_get_the_window_size()
         {
-            var expectedSize = new Size(height: 600, width: 800);
-            cy.Visit("https://google.com");
-            var size = cy.WindowSize();
-
-            Assert.AreEqual(size, expectedSize);
+            var expectedSize = cy.WindowSize(width: 800, height: 600);
+            Assert.AreEqual(cy.WindowSize(), expectedSize);
         }
     }
 }

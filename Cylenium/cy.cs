@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
@@ -236,9 +237,21 @@ namespace Cylenium
         /// <summary>
         /// Gets the size of the current window.
         /// </summary>
-        public static System.Drawing.Size WindowSize()
+        public static Size WindowSize()
         {
             return WebDriver.Manage().Window.Size;
+        }
+
+        /// <summary>
+        /// Set the size of the current window given the width and height.
+        /// </summary>
+        /// <param name="width">The width in pixels.</param>
+        /// <param name="height">The height in pixels.</param>
+        /// <returns>The new Size of the current window.</returns>
+        public static Size WindowSize(int width, int height)
+        {
+            WebDriver.Manage().Window.Size = new Size(width, height);
+            return WindowSize();
         }
 
         #endregion
