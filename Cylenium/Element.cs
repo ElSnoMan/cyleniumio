@@ -312,6 +312,16 @@ namespace Cylenium
         #region CHECKS or EXPECTATIONS
 
         /// <summary>
+        /// A collection of expectations and conditions to check against this element.
+        /// </summary>
+        /// <param name="timeout">The number of seconds for the condition to be true.</param>
+        /// <param name="ignoredExceptions">The list of exceptions to ignore.</param>
+        public ElementShould Should(int timeout = -1, params Type[] ignoredExceptions)
+        {
+            return new ElementShould(this, timeout, ignoredExceptions);
+        }
+
+        /// <summary>
         /// Check if the element is checked.
         /// </summary>
         public bool IsChecked() => cy.ExecuteScript<bool>("return arguments[0].checked;", WebElement);
