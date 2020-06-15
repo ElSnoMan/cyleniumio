@@ -12,7 +12,7 @@ namespace Cylenium.Tests
         public void Click_element()
         {
             cy.Visit("https://qap.dev");
-            cy.Get("[href='/about']").Click();
+            cy.Get("[href='/about']", timeout: 5).Click();
             Assert.That(cy.Title(), Is.EqualTo("Our Vision — QA at the Point"));
         }
 
@@ -22,7 +22,7 @@ namespace Cylenium.Tests
         {
             cy.Visit("https://qap.dev");
             cy.Get("[href='/about']").Hover();
-            cy.Contains("Leadership").Click(force: true);
+            cy.Contains("Leadership", timeout: 0).Click(force: true);
             Assert.That(cy.Contains("Carlos Kidman").IsDisplayed());
             // Assert.That(cy.Contains("Carlos Kidman").Should().BeDisplayed());
         }
