@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using NUnit.Framework;
 
 namespace Cylenium.Tests
@@ -28,6 +29,15 @@ namespace Cylenium.Tests
             wait.Until(_ => cy.Get("[name='q']"));
 
             Assert.That(wait.Timeout.Seconds, Is.EqualTo(10));
+        }
+
+
+        [Test]
+        [Category("Driver")]
+        public void Set_and_get_the_window_size()
+        {
+            var expectedSize = cy.WindowSize(width: 800, height: 600);
+            Assert.AreEqual(cy.WindowSize(), expectedSize);
         }
     }
 }
