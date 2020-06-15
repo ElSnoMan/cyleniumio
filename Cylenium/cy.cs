@@ -141,14 +141,15 @@ namespace Cylenium
         /// <param name="css">The CSS selector.</param>
         /// <param name="atLeastOne">Wait until at least one is found?</param>
         /// <returns>The list of Elements</returns>
-        public static Elements Find(string css, bool atLeastOne = false)
+        public static Elements Find(string css, bool atLeastOne = true)
         {
             ReadOnlyCollection<IWebElement> elements = null;
             var by = By.CssSelector(css);
 
             if (atLeastOne)
             {
-                elements = _wait.Until(drvr => drvr.FindElements(by));
+                _wait.Until(drvr => drvr.FindElements(by).Count > 0);
+                elements = WebDriver.FindElements(by);
             }
             else
             {
@@ -171,7 +172,8 @@ namespace Cylenium
 
             if (atLeastOne)
             {
-                elements = _wait.Until(drvr => drvr.FindElements(by));
+                _wait.Until(drvr => drvr.FindElements(by).Count > 0);
+                elements = WebDriver.FindElements(by);
             }
             else
             {
