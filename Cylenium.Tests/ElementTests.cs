@@ -138,6 +138,8 @@ namespace Cylenium.Tests
             Assert.That(checkbox.IsChecked(), Is.False);
 
             checkbox.Check().Should().BeChecked();
+            checkbox.Uncheck();
+            Assert.That(checkbox.IsChecked(), Is.False);
         }
 
         [Test]

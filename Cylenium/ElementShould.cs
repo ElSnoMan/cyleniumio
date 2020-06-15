@@ -109,7 +109,7 @@ namespace Cylenium
         {
             try
             {
-                _wait.Until(_ => _element.IsEnabled());
+                _wait.Until(drvr => _element == drvr.SwitchTo().ActiveElement());
                 return _element;
             }
             catch (WebDriverTimeoutException)
