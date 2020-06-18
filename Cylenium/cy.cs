@@ -245,6 +245,11 @@ namespace Cylenium
 
         #region BROWSER
 
+        public static ReadOnlyCollection<string> WindowHandles()
+        {
+            return WebDriver.WindowHandles;
+        }
+
         /// <summary>
         /// Maximizes the current window.
         /// </summary>
