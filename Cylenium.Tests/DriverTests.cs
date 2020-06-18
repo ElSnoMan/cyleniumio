@@ -48,7 +48,6 @@ namespace Cylenium.Tests
 
             cy.Visit("https://google.co");
             cy.ExecuteScript<String>("window.open('" + test_url + "', '_blank')");
-            wait.Until(_ => cy.Get(".Header-branding"));
             Assert.AreEqual(2, cy.WindowHandles().Count);
         }
     }
