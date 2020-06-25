@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 
 namespace Cylenium.Tests
@@ -49,6 +50,11 @@ namespace Cylenium.Tests
             cy.Get("[href='/leadership']").Click();
             wait.Until(_ => cy.Get("[href='http://alarm.com/']"));
             cy.Go("back", 2);
+        public void Count_number_of_tabs()
+        {
+            cy.Visit("https://google.com");
+            cy.ExecuteScript<String>("window.open('https://www.qap.dev/', '_blank')");
+            Assert.AreEqual(2, cy.WindowHandles().Count);
         }
     }
 }
