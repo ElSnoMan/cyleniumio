@@ -50,6 +50,8 @@ namespace Cylenium.Tests
             cy.Get("[href='/leadership']").Click();
             wait.Until(_ => cy.Get("[href='http://alarm.com/']"));
             cy.Go("back", 2);
+        }
+
         public void Count_number_of_tabs()
         {
             cy.Visit("https://google.com");
