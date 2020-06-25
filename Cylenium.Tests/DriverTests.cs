@@ -43,11 +43,8 @@ namespace Cylenium.Tests
         [Category("Driver")]
         public void Count_number_of_tabs()
         {
-            var wait = cy.Wait();
-            string test_url = "https://www.qap.dev/";
-
-            cy.Visit("https://google.co");
-            cy.ExecuteScript<String>("window.open('" + test_url + "', '_blank')");
+            cy.Visit("https://google.com");
+            cy.ExecuteScript<String>("window.open('https://www.qap.dev/', '_blank')");
             Assert.AreEqual(2, cy.WindowHandles().Count);
         }
     }

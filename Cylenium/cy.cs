@@ -245,6 +245,10 @@ namespace Cylenium
 
         #region BROWSER
 
+        /// <summary>
+        /// Gets the number of window handles (This could be for windows or tabs.)
+        /// </summary>
+        /// <returns>A read only collection of window handle IDs(strings).</returns>
         public static ReadOnlyCollection<string> WindowHandles()
         {
             return WebDriver.WindowHandles;
@@ -261,6 +265,7 @@ namespace Cylenium
         /// <summary>
         /// Gets the size of the current window.
         /// </summary>
+        /// <returns>Size of the current window</returns>
         public static Size WindowSize()
         {
             return WebDriver.Manage().Window.Size;
