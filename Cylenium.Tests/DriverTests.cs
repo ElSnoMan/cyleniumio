@@ -37,5 +37,18 @@ namespace Cylenium.Tests
             var expectedSize = cy.WindowSize(width: 800, height: 600);
             Assert.AreEqual(cy.WindowSize(), expectedSize);
         }
+
+        [Test]
+        [Category("Driver")]
+        public void Go_forward_and_backward()
+        {
+            var wait = cy.Wait();
+            var base_url = cy.Visit("https://google.com");
+            wait.Until(_ => cy.Get("[name='q']"));
+            cy.Visit("https://www.qap.dev/");
+            cy.Get("[href='/leadership']").Click();
+            wait.Until(_ => cy.Get("[href='http://alarm.com/']"));
+            cy.Go("back", 2);
+        }
     }
 }
