@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 
 namespace Cylenium.Tests
@@ -36,6 +37,15 @@ namespace Cylenium.Tests
         {
             var expectedSize = cy.WindowSize(width: 800, height: 600);
             Assert.AreEqual(cy.WindowSize(), expectedSize);
+        }
+
+        [Test]
+        [Category("Driver")]
+        public void Count_number_of_tabs()
+        {
+            cy.Visit("https://google.com");
+            cy.ExecuteScript<String>("window.open('https://www.qap.dev/', '_blank')");
+            Assert.AreEqual(2, cy.WindowHandles().Count);
         }
     }
 }
