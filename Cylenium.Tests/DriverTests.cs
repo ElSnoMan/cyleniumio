@@ -1,5 +1,6 @@
 using System;
 using NUnit.Framework;
+using OpenQA.Selenium;
 
 namespace Cylenium.Tests
 {
@@ -46,6 +47,29 @@ namespace Cylenium.Tests
             cy.Visit("https://google.com");
             cy.ExecuteScript<String>("window.open('https://www.qap.dev/', '_blank')");
             Assert.AreEqual(2, cy.WindowHandles().Count);
+        }
+
+        [Test]
+        [Category("Driver")]
+        public void Delete_all_cookies()
+        {
+            cy.Visit("https://google.com");
+            cy.AddCookie(new Cookie("foo", "bar"));
+            cy.DeleteCookies();
+            Assert.AreEqual(0, cy.GetCookies().Count);
+        }
+
+        [Test]
+        [Category("Driver")]
+        public void Get_and_delete_cookie()
+        {
+            cy.Visit("https://google.com");
+            var cookieAdded = cy.AddCookie(new Cookie("foo", "bar"));
+            var cookie = cy.GetCookie("foo");
+            Assert.AreEqual(cookieAdded, cookie);
+
+            cy.DeleteCookie(cookie.Name);
+            Assert.IsNull(cy.GetCookie("foo"));
         }
     }
 }
