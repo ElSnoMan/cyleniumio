@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using NUnit.Framework;
 
 namespace Cylenium.Tests
@@ -41,17 +42,30 @@ namespace Cylenium.Tests
 
         [Test]
         [Category("Driver")]
-        public void Go_forward_and_backward()
+        public void Navigate_backward_and_forward()
         {
             var wait = cy.Wait();
-            var base_url = cy.Visit("https://google.com");
+
+            cy.Visit("https://google.com");
             wait.Until(_ => cy.Get("[name='q']"));
-            cy.Visit("https://www.qap.dev/");
-            cy.Get("[href='/leadership']").Click();
-            wait.Until(_ => cy.Get("[href='http://alarm.com/']"));
-            cy.Go("back", 2);
+            var first = cy.Title();
+
+            cy.Visit("https://www.ultimateqa.com");
+            wait.Until(_ => cy.Get("[href='https://ultimateqa.com/video-tutorials/']"));
+            var second = cy.Title();
+
+            cy.Go("backward", 1);
+            var last = cy.Title();
+            Assert.AreEqual(first, last, "Expected to be on " + first + " went backward to" + last);
+
+            cy.Go("forward", 1);
+            wait.Until(_ => cy.Get("[href='https://ultimateqa.com/video-tutorials/']"));
+            var forward = cy.Title();
+            Assert.AreEqual(second, forward, "Expected to be on" + second + " went forward to" + forward);
         }
 
+        [Test]
+        [Category("Driver")]
         public void Count_number_of_tabs()
         {
             cy.Visit("https://google.com");

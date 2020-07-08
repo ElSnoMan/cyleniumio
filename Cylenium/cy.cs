@@ -127,13 +127,13 @@ namespace Cylenium
         /// <param number="1" default is 1>Will go forward or backward number of pages input.</param>
         public static void Go(string direction, int number)
         {
-            if (direction == "back")
+            if (direction == "backward")
             {
-                cy.ExecuteScript<String>("window.history.go()", number * -1);
+                cy.ExecuteScript<String>("window.history.go(arguments[0])", number * -1);
             }
             else if (direction == "forward")
             {
-                cy.ExecuteScript<String>("window.history.go()", number);
+                cy.ExecuteScript<String>("window.history.go(arguments[0])", number);
             }
             else
             {
