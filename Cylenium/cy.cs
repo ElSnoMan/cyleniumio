@@ -121,11 +121,11 @@ namespace Cylenium
         }
 
         /// <summary>
-        /// Navigate forward or backward.
+        /// Navigate forward or backward "N" number of pages.
         /// </summary>
-        /// <param direction="forward" or "back">Direction navigating to from current URL.</param>
-        /// <param number="1" default is 1>Will go forward or backward number of pages input.</param>
-        public static void Go(string direction, int number)
+        /// <param direction="forward" or "back">Go 'forward' or 'backward.</param>
+        /// <param number="1" default is 1>Number of pages to go forwards or backwards.</param>
+        public static void Go(string direction, int number = 1)
         {
             if (direction == "backward")
             {
