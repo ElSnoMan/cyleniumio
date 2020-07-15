@@ -267,6 +267,49 @@ namespace Cylenium
         #region BROWSER
 
         /// <summary>
+        /// Adds a cookie to the current page.
+        /// </summary>
+        /// <returns>The cookie that was added.</returns>
+        public static Cookie AddCookie(Cookie cookie)
+        {
+            WebDriver.Manage().Cookies.AddCookie(cookie);
+            return cookie;
+        }
+
+        /// <summary>
+        /// Deletes the cookie with the given name.
+        /// </summary>
+        public static void DeleteCookie(string name)
+        {
+            WebDriver.Manage().Cookies.DeleteCookieNamed(name);
+        }
+
+        /// <summary>
+        /// Deletes all cookies from the current page.
+        /// </summary>
+        public static void DeleteCookies()
+        {
+            WebDriver.Manage().Cookies.DeleteAllCookies();
+        }
+
+        /// <summary>
+        /// Gets the cookie with the given name.
+        /// </summary>
+        /// <returns>Returns Null if the cookie is not found.</returns>
+        public static Cookie GetCookie(string name)
+        {
+            return WebDriver.Manage().Cookies.GetCookieNamed(name);
+        }
+
+        /// <summary>
+        /// Gets all cookies from the current page.
+        /// </summary>
+        public static ReadOnlyCollection<Cookie> GetCookies()
+        {
+            return WebDriver.Manage().Cookies.AllCookies;
+        }
+
+        /// <summary>
         /// Gets the number of window handles (This could be for windows or tabs.)
         /// </summary>
         /// <returns>A read only collection of window handle IDs(strings).</returns>
