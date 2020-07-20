@@ -120,6 +120,27 @@ namespace Cylenium
             WebDriver.Url = url;
         }
 
+        /// <summary>
+        /// Navigate forward or backward "N" number of pages.
+        /// </summary>
+        /// <param direction="forward" or "back">Go 'forward' or 'backward.</param>
+        /// <param number="1" default is 1>Number of pages to go forwards or backwards.</param>
+        public static void Go(string direction, int number = 1)
+        {
+            if (direction == "backward")
+            {
+                cy.ExecuteScript<String>("window.history.go(arguments[0])", number * -1);
+            }
+            else if (direction == "forward")
+            {
+                cy.ExecuteScript<String>("window.history.go(arguments[0])", number);
+            }
+            else
+            {
+                throw new ArgumentException($"direction was invalid. Must be `forward` or `back` but was {direction}");
+            }
+        }
+
         #endregion
 
         #region FINDING ELEMENTS

@@ -42,6 +42,23 @@ namespace Cylenium.Tests
 
         [Test]
         [Category("Driver")]
+        public void Navigate_backward_and_forward()
+        {
+            cy.Visit("https://google.com");
+            var google_title = cy.Title();
+
+            cy.Visit("https://www.ultimateqa.com");
+            var ultimateqa_title = cy.Title();
+
+            cy.Go("backward", 1);
+            Assert.AreEqual(google_title, cy.Title(), "Expected to be on " + google_title + " went backward to" + cy.Title());
+
+            cy.Go("forward", 1);
+            Assert.AreEqual(ultimateqa_title, cy.Title(), "Expected to be on" + ultimateqa_title + " went forward to" + cy.Title());
+        }
+
+        [Test]
+        [Category("Driver")]
         public void Count_number_of_tabs()
         {
             cy.Visit("https://google.com");
