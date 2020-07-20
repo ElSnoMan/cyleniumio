@@ -45,20 +45,16 @@ namespace Cylenium.Tests
         public void Navigate_backward_and_forward()
         {
             cy.Visit("https://google.com");
-            cy.Get("[name='q']");
             var google_title = cy.Title();
 
             cy.Visit("https://www.ultimateqa.com");
-            cy.Get("[href='https://ultimateqa.com/video-tutorials/']");
             var ultimateqa_title = cy.Title();
 
             cy.Go("backward", 1);
             Assert.AreEqual(google_title, cy.Title(), "Expected to be on " + google_title + " went backward to" + cy.Title());
 
             cy.Go("forward", 1);
-            cy.Get("[href='https://ultimateqa.com/video-tutorials/']");
-            var forward = cy.Title();
-            Assert.AreEqual(ultimateqa_title, forward, "Expected to be on" + ultimateqa_title + " went forward to" + forward);
+            Assert.AreEqual(ultimateqa_title, cy.Title(), "Expected to be on" + ultimateqa_title + " went forward to" + cy.Title());
         }
 
         [Test]
