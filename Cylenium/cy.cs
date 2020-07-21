@@ -310,6 +310,17 @@ namespace Cylenium
         }
 
         /// <summary>
+        /// Scroll to a location on the page.
+        /// </summary>
+        /// <param name="x">The number of pixels to scroll horizontally</param>
+        /// <param name="y">The number of pixels to scroll vertically</param>
+        public static void ScrollTo(int x, int y)
+        {
+            var js = "window.scrollTo(arguments[0], arguments[1]);";
+            cy.ExecuteScript<String>(js, x, y);
+        }
+
+        /// <summary>
         /// Gets the number of window handles (This could be for windows or tabs.)
         /// </summary>
         /// <returns>A read only collection of window handle IDs(strings).</returns>
